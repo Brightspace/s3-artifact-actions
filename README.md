@@ -34,3 +34,6 @@ Usage
 ```
 
 The specified `aws_role` should have `s3:PutObject`, `s3:GetObject`, and `s3:GetObjectVersion` access to the specified `aws_s3_bucket`.
+
+The AWS SDK is initialized with defaults and then used to assume the specified `aws_role` so any environment variables automatically
+read by the SDK can be used.  AWS machine roles should also work if you are using a custom runner.
