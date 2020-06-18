@@ -1,0 +1,15 @@
+name: 'Extract Artifacts'
+description: 'Extracts artifacts'
+inputs:
+  path:
+    description: 'repository-relative to the files to archive'
+    required: true
+  artifacts_url:
+    description: 'url of archived artifacts'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    ARTIFACTS_URL: ${{ inputs.artifacts_url }}
+    PATH_FOR_EXTRACT: ${{ inputs.path }}

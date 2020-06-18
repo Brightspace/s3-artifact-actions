@@ -1,0 +1,22 @@
+name: 'Store Artifacts'
+description: 'Stores artifacts'
+inputs:
+  path:
+    description: 'repository-relative to the files to archive'
+    required: true
+  aws_role:
+    description: 'aws role to assume'
+    required: true
+  aws_s3_bucket:
+    description: 'aws s3 bucket to use for uploading files'
+    required: true
+outputs:
+  artifacts_url:
+    description: 'a url that can be used to download the artifacts'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  env:
+    AWS_ROLE: ${{ inputs.aws_role }}
+    AWS_S3_BUCKET: ${{ inputs.aws_s3_bucket }}
+    PATH_TO_ARCHIVE: ${{ inputs.path }}
