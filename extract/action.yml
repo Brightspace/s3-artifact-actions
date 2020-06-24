@@ -2,8 +2,9 @@ name: 'Extract Artifacts'
 description: 'Extracts artifacts'
 inputs:
   path:
-    description: 'repository-relative to the files to archive'
-    required: true
+    description: 'path for extracted files'
+    required: false
+    default: '.'
   artifacts_url:
     description: 'url of archived artifacts'
     required: true

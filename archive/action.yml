@@ -2,8 +2,13 @@ name: 'Store Artifacts'
 description: 'Stores artifacts'
 inputs:
   path:
-    description: 'repository-relative to the files to archive'
-    required: true
+    description: 'repository-relative path to the files to archive'
+    required: false
+    default: '.'
+  include:
+    description: 'glob for files to include - python glob syntax'
+    required: false
+    default: '**/*'
   aws_role:
     description: 'aws role to assume'
     required: true
@@ -20,3 +25,4 @@ runs:
     AWS_ROLE: ${{ inputs.aws_role }}
     AWS_S3_BUCKET: ${{ inputs.aws_s3_bucket }}
     PATH_TO_ARCHIVE: ${{ inputs.path }}
+    PATH_INCLUDE_PATTERN: ${{ inputs.include }}

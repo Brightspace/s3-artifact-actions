@@ -3,9 +3,11 @@
 import os
 import secrets
 import tarfile
+import pathlib
 import boto3
 
 path_to_archive = os.environ['PATH_TO_ARCHIVE']
+path_include_pattern = os.environ['PATH_INCLUDE_PATTERN']
 aws_role = os.environ['AWS_ROLE']
 aws_s3_bucket = os.environ['AWS_S3_BUCKET']
 
@@ -18,7 +20,11 @@ print( 'archiving directory {}'.format( abs_path_to_archive ) )
 archive_file_name = '/tmp/archive.tar.gz'
 
 with tarfile.open(archive_file_name, 'w:gz') as tar:
-  tar.add(path_to_archive, arcname='.')
+  for item_path in pathlib.Path( path_to_archive ).glob( path_include_pattern ):
+    archive_path = os.path.relpath( item_path, path_to_archive )
+    if archive_path == '.':
+      continue
+    tar.add(item_path, arcname=archive_path, recursive=False)
 
 print( 'assuming aws role {}'.format( aws_role ) )
 sts_client = boto3.client('sts')
